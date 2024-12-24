@@ -5,13 +5,19 @@ from sendgrid.helpers.mail import Mail
 from ethairballoons import ethairBalloons
 from web3 import Web3
 from solcx import set_solc_version
+import json
 
 
 set_solc_version('0.8.28')  # Set Solidity compiler version
+with open("config.json") as config_file:
+        config = json.load(config_file)        
+SENDGRID_API_KEY = config["SENDGRID_API_KEY"]
 
 
 web3Provider = Web3(Web3.HTTPProvider('http://127.0.0.1:8545'))  # Ganache WebSocket provider
 provider = ethairBalloons('127.0.0.1', 'contracts/')  # Keep contract save path intact
+# Ganache account details
+account_address = "0x1acf944a9d3F6F8AcBcdCeA1F480D6745070E400"
 
 
 survey_schema = provider.createSchema(modelDefinition={
@@ -70,7 +76,9 @@ def send_email(email, otp, username):
         plain_text_content=f"Hello {username},\n\nYour OTP is: {otp}\n\nThank you!"
     )
     try:
-        sg = SendGridAPIClient("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")  # SendGrid API key
+        sg = SendGridAPIClient("SENDGRID_API_KEY")  # SendGrid API key
+    
+
         response = sg.send(message)
         print(f"Email sent: {response.status_code}")
     except Exception as e:

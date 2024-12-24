@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OTP Verification</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+    <link href="{{ url_for('static', filename='output.css') }}" rel="stylesheet">
+</head>
+<body class="bg-gray-900 text-gray-100 flex items-center justify-center h-screen">
+    <!-- Main Container -->
+    <div class="max-w-lg w-full bg-gray-800 shadow-lg rounded-lg p-8">
+        <!-- Title -->
+        <h1 class="text-3xl font-bold text-center mb-6 text-indigo-400">OTP Verification</h1>
+        <p class="text-sm text-gray-400 text-center mb-4">
+            Please enter the 6-digit OTP sent to your email. <br>
+            Code is valid for 30 minutes. <br>
+            If you don’t see the email, check your spam folder.
+        </p>
+
+        <!-- Show Error Message -->
+        {% if error_message %}
+        <div class="mb-4 p-3 bg-red-500 text-white text-sm rounded-lg">
+            {{ error_message }}
+        </div>
+        {% endif %}
+
+        <!-- OTP Form -->
+        <form action="/otp" method="POST" class="space-y-4">
+            <div>
+                <label for="otp" class="block text-sm font-medium text-gray-300">Enter OTP Code</label>
+                <input
+                    type="text"
+                    name="otp"
+                    id="otp"
+                    placeholder="Enter the OTP"
+                    class="w-full bg-gray-700 text-gray-100 border border-gray-600 rounded-lg p-3 mt-1 focus:outline-none focus:ring focus:ring-indigo-500"
+                    required
+                >
+            </div>
+
+            <!-- Submit Button -->
+            <div>
+                <button
+                    type="submit"
+                    class="w-full bg-indigo-500 text-white py-3 rounded-lg font-semibold hover:bg-indigo-600 transition duration-300"
+                >
+                    Verify OTP
+                </button>
+            </div>
+        </form>
+
+        <!-- Resend OTP Button -->
+        {% if show_resend %}
+        <form action="/resend_otp" method="GET" class="mt-4">
+            <button
+                type="submit"
+                class="w-full bg-gray-700 text-white py-3 rounded-lg font-semibold hover:bg-gray-600 transition duration-300"
+            >
+                Resend OTP
+            </button>
+        </form>
+        {% endif %}
+    </div>
+</body>
+</html>
+
+       

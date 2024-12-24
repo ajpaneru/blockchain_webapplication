@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Company Leaderboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Material Tailwind CSS -->
+    <link href="https://unpkg.com/@material-tailwind/html@latest/styles/material-tailwind.css" rel="stylesheet" />
+    <!-- Material Tailwind JS -->
+    <script src="https://unpkg.com/@material-tailwind/html@latest/scripts/material-tailwind.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-gray-100">
+    <div class="container mx-auto py-8">
+        <h1 class="text-3xl font-bold text-center mb-6 text-indigo-400">Company Leaderboard</h1>
+        <div class="overflow-x-auto rounded-lg shadow-lg">
+            <table class="min-w-full bg-gray-800 text-gray-300 rounded-lg">
+                <thead class="border-b bg-gray-700 text-gray-100">
+                    <tr>
+                        <th class="px-4 py-2">Rank</th>
+                        <th class="px-4 py-2">Logo</th>
+                        <th class="px-4 py-2 cursor-pointer" onclick="sortTable(2)">Domain</th>
+                        <th class="px-4 py-2 cursor-pointer" onclick="sortTable(3)">Q1 Avg</th>
+                        <th class="px-4 py-2 cursor-pointer" onclick="sortTable(4)">Q2 Avg</th>
+                        <th class="px-4 py-2 cursor-pointer" onclick="sortTable(5)">Q3 Avg</th>
+                        <th class="px-4 py-2 cursor-pointer" onclick="sortTable(6)">Overall Avg</th>
+                        <th class="px-4 py-2 cursor-pointer" onclick="sortTable(7)">Responses</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for company in companies %}
+                    <tr class="border-b border-gray-700 hover:bg-gray-800 {% if loop.index == 1 %} bg-indigo-700 text-white {% endif %}">
+                        <td class="px-4 py-2">{{ loop.index }}</td>
+                        <td class="px-4 py-2">
+                            <img src="{{ company.logo }}" alt="Logo" class="h-8 w-8 rounded-full" onerror="this.src='/static/default_logo.png'">
+                        </td>
+                        <td class="px-4 py-2">{{ company.domain }}</td>
+                        <td class="px-4 py-2">{{ company.q1_avg }}</td>
+                        <td class="px-4 py-2">{{ company.q2_avg }}</td>
+                        <td class="px-4 py-2">{{ company.q3_avg }}</td>
+                        <td class="px-4 py-2">{{ company.overall_avg }}</td>
+                        <td class="px-4 py-2">{{ company.responses }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Sorting Script -->
+    <script>
+        function sortTable(n) {
+            const table = document.querySelector("table");
+            let rows = Array.from(table.rows).slice(1);
+            let ascending = table.dataset.sortCol !== String(n);
+
+            rows.sort((rowA, rowB) => {
+                const cellA = rowA.cells[n].innerText;
+                const cellB = rowB.cells[n].innerText;
+                return ascending
+                    ? cellA.localeCompare(cellB, undefined, { numeric: true })
+                    : cellB.localeCompare(cellA, undefined, { numeric: true });
+            });
+
+            rows.forEach(row => table.appendChild(row));
+            table.dataset.sortCol = ascending ? n : -1;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Survey Sign-Up</title>
+    <script src="https://cdn.tailwindcss.com"></script> <!-- Tailwind CSS -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif; /* Modern font similar to Palantir style */
+        }
+    </style>
+    <link href="{{ url_for('static', filename='output.css') }}" rel="stylesheet">
+</head>
+<body class="bg-gray-900 text-gray-100 flex items-center justify-center h-screen">
+    <!-- Main Container -->
+    <div class="max-w-lg w-full bg-gray-800 shadow-lg rounded-lg p-8">
+        <!-- Title -->
+        <h1 class="text-3xl font-bold text-center mb-6 text-indigo-400">Welcome to the Survey</h1>
+        <p class="text-sm text-gray-400 text-center mb-6">
+            Join us in creating meaningful insights by signing up to take part in our survey.
+        </p>
+
+        <!-- Form -->
+        <form action="/send_otp" method="POST" class="space-y-4">
+            <!-- Username Field -->
+            <div>
+                <label for="username" class="block text-sm font-medium text-gray-300">Username</label>
+                <input
+                    type="text"
+                    name="username"
+                    id="username"
+                    placeholder="Enter your username"
+                    class="w-full bg-gray-700 text-gray-100 border border-gray-600 rounded-lg p-3 mt-1 focus:outline-none focus:ring focus:ring-indigo-500"
+                    required
+                >
+            </div>
+
+            <!-- Email Field -->
+            <div>
+                <label for="email" class="block text-sm font-medium text-gray-300">Email</label>
+                <input
+                    type="email"
+                    name="email"
+                    id="email"
+                    placeholder="Enter your email"
+                    class="w-full bg-gray-700 text-gray-100 border border-gray-600 rounded-lg p-3 mt-1 focus:outline-none focus:ring focus:ring-indigo-500"
+                    required
+                >
+            </div>
+
+            <!-- Submit Button -->
+            <div>
+                <button
+                    type="submit"
+                    class="w-full bg-indigo-500 text-gray-100 py-3 rounded-lg font-semibold hover:bg-indigo-600 transition duration-300"
+                >
+                    Send OTP
+                </button>
+            </div>
+        </form>
+
+        <!-- Footer -->
+        <div class="mt-6 text-center text-sm text-gray-500">
+            <p>By signing up, you agree to our <a href="#" class="text-indigo-400 hover:underline">Terms of Service</a>.</p>
+        </div>
+    </div>
+</body>
+</html>

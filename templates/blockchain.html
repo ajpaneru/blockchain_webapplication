@@ -1,0 +1,48 @@
+<!-- templates/blockchain.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Survey Results</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Material Tailwind CSS -->
+    <link href="https://unpkg.com/@material-tailwind/html@latest/styles/material-tailwind.css" rel="stylesheet" />
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-gray-100">
+    <div class="container mx-auto py-8">
+        <h1 class="text-3xl font-bold text-center mb-6 text-indigo-400">Public Survey Results</h1>
+        <div class="overflow-x-auto">
+            <table class="min-w-full text-left text-sm">
+                <thead class="border-b bg-gray-800 text-gray-300">
+                    <tr>
+                        <th class="px-4 py-2">Block #</th>
+                        <th class="px-4 py-2">Timestamp</th>
+                        <th class="px-4 py-2">Company Domain</th>
+                        <th class="px-4 py-2">Q1 Response</th>
+                        <th class="px-4 py-2">Q2 Response</th>
+                        <th class="px-4 py-2">Q3 Response</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for block in blockchain[1:] %} <!-- Skip Genesis Block -->
+                    <tr class="border-b border-gray-700 hover:bg-gray-800">
+                        <td class="px-4 py-2">{{ block.index }}</td>
+                        <td class="px-4 py-2">{{ block.timestamp }}</td>
+                        <td class="px-4 py-2">{{ block.data.domain }}</td>
+                        <td class="px-4 py-2">{{ block.data.q1 }}</td>
+                        <td class="px-4 py-2">{{ block.data.q2 }}</td>
+                        <td class="px-4 py-2">{{ block.data.q3 }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
